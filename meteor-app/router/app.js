@@ -37,6 +37,12 @@ Router.route( '/', {
 	controller: 'AUController'
 } );
 
+Router.route( '/search', {
+	name: 'search',
+	template: 'search',
+	controller: 'AUController'
+} )
+
 /**
  * Accounts Routes
  */
@@ -68,7 +74,7 @@ AccountsTemplates.configureRoute( 'signIn', {
 	name: 'signIn',
 	path: '/login',
 	template: 'login',
-	redirect: '/',
+	redirect: '/search',
 	controller: 'AUController'
 } );
 AccountsTemplates.configureRoute( 'signUp', {
