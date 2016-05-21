@@ -1,0 +1,5 @@
+Crawler Indexer gets the necessary data indexed to the Elastic search.
+
+Crawler - Crawler4j
+Indexer- Elastic Search Java Library
+Content Extractor - Boilerpipe
