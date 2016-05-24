@@ -16,3 +16,8 @@ Elastic Search AWS Endpoint
 - Console: https://983852029815.signin.aws.amazon.com/console
 	- Username: bala
     - password : bala@123
+
+Our Own Custom Elastic Search Instance
+======================================
+
+- Endpoint: http://52.40.86.78:9200/_cat/health?v
