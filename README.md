@@ -20,4 +20,5 @@ Elastic Search AWS Endpoint
 Our Own Custom Elastic Search Instance
 ======================================
 
-- Endpoint: http://52.40.86.78:9200/_cat/health?v
+- Endpoint: http://52.40.86.78:9200/
+- Endpoint: http://ec2-52-40-86-78.us-west-2.compute.amazonaws.com:9200/
