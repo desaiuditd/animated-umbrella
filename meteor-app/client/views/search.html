@@ -20,9 +20,14 @@
 
 			<div class="row search-meta-info">
 				<div class="col-lg-12">
-					{{#if totalDocuments and timeTook}}
+					{{#if totalDocuments}}
 						<p class="text-info">About {{totalDocuments}} results ({{timeTook}} milliseconds)</p>
 					{{/if}}
+
+					{{#if showNoResultsFound}}
+						<p class="text-muted">No results found for this query.</p>
+					{{/if}}
+
 				</div>
 			</div>
 

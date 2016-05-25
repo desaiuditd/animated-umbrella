@@ -15,6 +15,23 @@ Template.search.helpers(
 		},
 		totalDocuments: function () {
 			return Session.get('es.totalDocuments') || 0;
+		},
+		showNoResultsFound: function () {
+			var data = this.data();
+
+			if ( data.queryParams.q == undefined )
+				return false;
+
+			if ( data.queryParams.q.length == 0 )
+				return false;
+
+			if ( ! Session.get('es.requestExecuted') )
+				return false;
+
+			if ( Session.get('es.totalDocuments') )
+				return false;
+
+			return true;
 		}
 	}
 );

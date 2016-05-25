@@ -24,12 +24,6 @@ ES = {
 					}
 				}
 			},
-			"fields": [
-				"text",
-				"title",
-				"url",
-				"timestamp"
-			],
 			"from":offset,
 			"size":limit,
 			"sort": {
@@ -53,5 +47,6 @@ ES = {
 		Session.set( 'es.searchResults', [] );
 		Session.set( 'es.totalDocuments', 0 );
 		Session.set( 'es.timeTook', 0 );
+		Session.set( 'es.requestExecuted', 0 );
 	}
 };

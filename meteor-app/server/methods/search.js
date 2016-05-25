@@ -10,10 +10,8 @@ Meteor.methods(
 				var response = ES.queryExecutioner(query);
 
 				if(response.statusCode==200) {
-					console.log("response received.");
 					return response.data;
 				} else {
-					console.log("Response issue: ", result.statusCode);
 					throw new Meteor.Error(result.statusCode, result.data.error);
 				}
 			}
