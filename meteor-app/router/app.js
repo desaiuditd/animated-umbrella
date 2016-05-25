@@ -2,50 +2,33 @@
  * Created by udit on 19/05/16.
  */
 
-/**
- * Public Routes without login
- */
-var publicRoutes = [
-	'home',
-	'changePwd',
-	'enrollAccount',
-	'forgotPwd',
-	'resetPwd',
-	'signIn',
-	'signUp',
-	'verifyEmail',
-	'resendVerificationEmail',
-	'privacy',
-	'termsOfUse'
-];
-
 FlowRouter.route( '/', {
+	triggersEnter: [ AccountsTemplates.ensureSignedIn, function () {
+		Session.set( 'searchResults', [] );
+		Session.set( 'totalDocuments', 0 );
+	} ],
 	name: 'home',
-	action: function() {
-		BlazeLayout.render('home');
-	}
-} );
-
-FlowRouter.route( '/search', {
-	triggersEnter: [AccountsTemplates.ensureSignedIn],
-	name: 'search',
 	action: function() {
 		BlazeLayout.render('search');
 	}
 } );
 
-FlowRouter.route('/search-results', {
+FlowRouter.route( '/search', {
 	triggersEnter: [ AccountsTemplates.ensureSignedIn, function () {
 		Session.set( 'searchResults', [] );
 		Session.set( 'totalDocuments', 0 );
 	} ],
-	name: 'searchResults',
-	action: function() {
-		var data = {};
-		data.request = this.request;
-		data.request.params = this.params;
+	name: 'search',
+	action: function(params, queryParams) {
 
-		BlazeLayout.render('searchResults', { data: data } );
+		console.log(params)
+		console.log(queryParams)
+
+		var data = {};
+		// data.request = this.request;
+		// data.request.params = this.params;
+
+		BlazeLayout.render('search', { data: data } );
 	}
 } );
 
@@ -55,44 +38,35 @@ FlowRouter.route('/search-results', {
 AccountsTemplates.configureRoute( 'changePwd', {
 	name: 'changePwd',
 	path: '/change-password',
-	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'enrollAccount', {
 	name: 'enrollAccount',
 	path: '/enroll-account',
-	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'forgotPwd', {
 	name: 'forgotPwd',
 	path: '/forgot-password',
-	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'resetPwd', {
 	name: 'resetPwd',
 	path: '/reset-password',
-	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'signIn', {
 	name: 'signIn',
 	path: '/login',
-	// template: 'login',
 	redirect: '/search'
 } );
-AccountsTemplates.configureRoute( 'signUp', {
+AccountsTemplates.configureRoute( 'signUp', {   
 	name: 'signUp',
 	path: '/register',
-	// template: 'login',
-	controller: 'AUController'
 } );
 AccountsTemplates.configureRoute( 'verifyEmail', {
 	name: 'verifyEmail',
 	path: '/verify-email',
-	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'resendVerificationEmail', {
 	name: 'resendVerificationEmail',
 	path: '/send-again',
-	// template: 'login'
 } );
 
 /**

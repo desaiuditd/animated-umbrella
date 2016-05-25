@@ -1,7 +1,7 @@
 /**
  * Created by udit on 25/05/16.
  */
-Template.searchResults.helpers(
+Template.search.helpers(
 	{
 		existingQuery: function () {
 			return this.request.params.query.q;

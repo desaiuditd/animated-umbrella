@@ -1,7 +1,7 @@
 /**
  * Created by udit on 25/05/16.
  */
-Template.searchResults.onRendered(function () {
+Template.search.onRendered(function () {
 	Meteor.call( 'fetchSearchResults', this.data.request.params.query.q, function ( error, response ) {
 		if ( error ) {
 			console.log("error occured on receiving data on server. ", err );
