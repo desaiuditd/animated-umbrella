@@ -24,6 +24,12 @@ ES = {
 					}
 				}
 			},
+			"fields": [
+				"text",
+				"title",
+				"url",
+				"timestamp"
+			],
 			"from":offset,
 			"size":limit,
 			"sort": {
