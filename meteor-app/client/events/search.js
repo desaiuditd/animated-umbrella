@@ -6,7 +6,7 @@ Template.search.onRendered(function () {
 
 	if ( data.queryParams.q ) {
 
-		Session.set( 'es.requestExecuted', 1 );
+		Session.set( 'es.requestTriggered', 1 );
 
 		Meteor.call( 'fetchSearchResults', data.queryParams.q, function ( error, response ) {
 			if ( error ) {
@@ -17,6 +17,7 @@ Template.search.onRendered(function () {
 				var totalDocuments = hits.total;
 				var documents = hits.hits;
 
+				Session.set( 'es.requestDone', 1 );
 				Session.set( 'es.searchResults', documents );
 				Session.set( 'es.totalDocuments', totalDocuments );
 				Session.set( 'es.timeTook', timeTook );

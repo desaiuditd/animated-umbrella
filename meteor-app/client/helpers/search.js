@@ -19,18 +19,27 @@ Template.search.helpers(
 		showNoResultsFound: function () {
 			var data = this.data();
 
+			console.log(data.queryParams.q);
+
 			if ( data.queryParams.q == undefined )
 				return false;
 
 			if ( data.queryParams.q.length == 0 )
 				return false;
 
-			if ( ! Session.get('es.requestExecuted') )
+			console.log("requestTriggered: "+Session.get('es.requestTriggered'))
+			if ( ! Session.get('es.requestTriggered') )
 				return false;
 
+			console.log("requestDone: "+Session.get('es.requestDone'))
+			if ( ! Session.get('es.requestDone') )
+				return false;
+
+			console.log("total docs: "+Session.get('es.totalDocuments'))
 			if ( Session.get('es.totalDocuments') )
 				return false;
 
+			console.log("show no results");
 			return true;
 		}
 	}

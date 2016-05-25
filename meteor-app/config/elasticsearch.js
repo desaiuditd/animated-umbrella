@@ -47,6 +47,7 @@ ES = {
 		Session.set( 'es.searchResults', [] );
 		Session.set( 'es.totalDocuments', 0 );
 		Session.set( 'es.timeTook', 0 );
-		Session.set( 'es.requestExecuted', 0 );
+		Session.set( 'es.requestTriggered', 0 );
+		Session.set( 'es.requestDone', 0 );
 	}
 };
