@@ -3,10 +3,7 @@
  */
 
 FlowRouter.route( '/', {
-	triggersEnter: [ AccountsTemplates.ensureSignedIn, function () {
-		Session.set( 'searchResults', [] );
-		Session.set( 'totalDocuments', 0 );
-	} ],
+	triggersEnter: [ AccountsTemplates.ensureSignedIn, ES.resetSessionVariables ],
 	name: 'home',
 	action: function() {
 		BlazeLayout.render('search');
@@ -14,19 +11,12 @@ FlowRouter.route( '/', {
 } );
 
 FlowRouter.route( '/search', {
-	triggersEnter: [ AccountsTemplates.ensureSignedIn, function () {
-		Session.set( 'searchResults', [] );
-		Session.set( 'totalDocuments', 0 );
-	} ],
+	triggersEnter: [ AccountsTemplates.ensureSignedIn, ES.resetSessionVariables ],
 	name: 'search',
 	action: function(params, queryParams) {
 
-		console.log(params)
-		console.log(queryParams)
-
 		var data = {};
-		// data.request = this.request;
-		// data.request.params = this.params;
+		data.queryParams = queryParams;
 
 		BlazeLayout.render('search', { data: data } );
 	}

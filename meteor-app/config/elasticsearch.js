@@ -41,7 +41,11 @@ ES = {
 			headers: query.headers,
 			data: query.formData
 		} );
-		console.log(response);
 		return response;
+	},
+	resetSessionVariables: function () {
+		Session.set( 'es.searchResults', [] );
+		Session.set( 'es.totalDocuments', 0 );
+		Session.set( 'es.timeTook', 0 );
 	}
 };
