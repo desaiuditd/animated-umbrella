@@ -19,29 +19,35 @@ var publicRoutes = [
 	'termsOfUse'
 ];
 
-/**
- * Route Controller to check on users.
- */
-AUController = RouteController.extend(
-	{
-		onBeforeAction: function() {
-			// Check users before routing
-			this.next();
-		}
-	}
-);
-
-Router.route( '/', {
+FlowRouter.route( '/', {
 	name: 'home',
-	template: 'home',
-	controller: 'AUController'
+	action: function() {
+		BlazeLayout.render('home');
+	}
 } );
 
-Router.route( '/search', {
+FlowRouter.route( '/search', {
+	triggersEnter: [AccountsTemplates.ensureSignedIn],
 	name: 'search',
-	template: 'search',
-	controller: 'AUController'
-} )
+	action: function() {
+		BlazeLayout.render('search');
+	}
+} );
+
+FlowRouter.route('/search-results', {
+	triggersEnter: [ AccountsTemplates.ensureSignedIn, function () {
+		Session.set( 'searchResults', [] );
+		Session.set( 'totalDocuments', 0 );
+	} ],
+	name: 'searchResults',
+	action: function() {
+		var data = {};
+		data.request = this.request;
+		data.request.params = this.params;
+
+		BlazeLayout.render('searchResults', { data: data } );
+	}
+} );
 
 /**
  * Accounts Routes
@@ -49,70 +55,58 @@ Router.route( '/search', {
 AccountsTemplates.configureRoute( 'changePwd', {
 	name: 'changePwd',
 	path: '/change-password',
-	template: 'login',
-	controller: 'AUController'
+	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'enrollAccount', {
 	name: 'enrollAccount',
 	path: '/enroll-account',
-	template: 'login',
-	controller: 'AUController'
+	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'forgotPwd', {
 	name: 'forgotPwd',
 	path: '/forgot-password',
-	template: 'login',
-	controller: 'AUController'
+	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'resetPwd', {
 	name: 'resetPwd',
 	path: '/reset-password',
-	template: 'login',
-	controller: 'AUController'
+	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'signIn', {
 	name: 'signIn',
 	path: '/login',
-	template: 'login',
-	redirect: '/search',
-	controller: 'AUController'
+	// template: 'login',
+	redirect: '/search'
 } );
 AccountsTemplates.configureRoute( 'signUp', {
 	name: 'signUp',
 	path: '/register',
-	template: 'login',
+	// template: 'login',
 	controller: 'AUController'
 } );
 AccountsTemplates.configureRoute( 'verifyEmail', {
 	name: 'verifyEmail',
 	path: '/verify-email',
-	template: 'login',
-	controller: 'AUController'
+	// template: 'login'
 } );
 AccountsTemplates.configureRoute( 'resendVerificationEmail', {
 	name: 'resendVerificationEmail',
 	path: '/send-again',
-	template: 'login',
-	controller: 'AUController'
-} );
-
-/**
- * Ensure User Login for templates
- */
-Router.plugin( 'ensureSignedIn', {
-	except: publicRoutes
+	// template: 'login'
 } );
 
 /**
  * Misc Routes
  * */
-Router.route( '/privacy', {
+FlowRouter.route( '/privacy', {
 	name: 'privacy',
-	template: 'privacy',
-	controller: 'AUController'
+	action: function() {
+		BlazeLayout.render('privacy');
+	}
 } );
-Router.route( '/terms-of-use', {
+FlowRouter.route( '/terms-of-use', {
 	name: 'termsOfUse',
-	template: 'termsOfUse',
-	controller: 'AUController'
+	action: function() {
+		BlazeLayout.render('termsOfUse');
+	}
 } );

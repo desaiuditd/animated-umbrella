@@ -1,4 +1,4 @@
-<template name="search">
+<template name="searchResults">
 
 	<div id="content">
 		{{> appNav}}
@@ -9,7 +9,7 @@
 				<div class="col-lg-12">
 					<form method="get" action="/search-results">
 						<div class="input-group">
-							<input type="text" name="q" class="form-control input-lg" placeholder="Search for..." />
+							<input type="text" name="q" class="form-control input-lg" placeholder="Search for..." value="{{existingQuery}}" />
 							<span class="input-group-btn">
 				                <button class="btn btn-primary btn-lg" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
 					        </span>
@@ -17,6 +17,20 @@
 					</form>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					{{#each searchResults}}
+						{{}}
+						<div class="row">
+							<div class="col-lg-12">
+								{{this.text}}
+							</div>
+						</div>
+					{{/each}}
+				</div>
+			</div>
+
 		</div>
 
 		{{> footer}}
