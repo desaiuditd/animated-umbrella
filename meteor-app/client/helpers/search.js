@@ -26,7 +26,7 @@ Template.searchResult.helpers(
 		},
 		textContent: function ( content ) {
 			if ( content.length > 500 ) {
-				return content.substring(0, 500) + ' ...';
+				return content.substring(0, 499) + ' ...';
 			} else {
 				return content;
 			}
