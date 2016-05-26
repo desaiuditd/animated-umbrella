@@ -1,0 +1,10 @@
+This server provides api for creating tags for the supplied text.
+
+Runs in ruby. 
+
+Steps to run the server.
+
+1. Install ruby
+2. Install ruby devkit
+3. Install Gems sinatra, json, phrasie
+4. Run the file sinatra.rb using "ruby sinatra.rb"
