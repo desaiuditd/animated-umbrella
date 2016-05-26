@@ -5,8 +5,12 @@
 FlowRouter.route( '/', {
 	triggersEnter: [ AccountsTemplates.ensureSignedIn, ES.resetSessionVariables ],
 	name: 'home',
-	action: function() {
-		BlazeLayout.render('search');
+	action: function(params, queryParams) {
+
+		var data = {};
+		data.queryParams = queryParams;
+
+		BlazeLayout.render('search', { data: data } );
 	}
 } );
 
