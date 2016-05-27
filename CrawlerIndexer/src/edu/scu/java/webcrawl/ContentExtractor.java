@@ -11,6 +11,7 @@ import java.util.List;
 import de.l3s.boilerpipe.BoilerpipeProcessingException;
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
 import de.l3s.boilerpipe.extractors.CommonExtractors;
+import edu.scu.java.webcrawl.models.Page;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -55,12 +56,23 @@ public class ContentExtractor {
 
 
 
-	public String extractFromDocument(Document doc){
+	public String extractFromDocument(Page page){
+		Document doc= page.getHTML();
+		doc.select("nav, .nav, .navbar, [class*=nav]").remove();
+		doc.select("head, #comment").remove();
+		doc.select("script, noscript, source, img").remove();
+		doc.select("header, .header, .head, #header, #head").remove();
+		doc.select("footer, .footer, #footer").remove();
+		doc.select(".sidebar, #sidebar, [class^=sidebar], aside, [class^=aside]").remove();
+		doc.select("[class*=social],[class*=facebook], [class*=twitter],[class*=pintrest],[id*=social], [class*=shar], [id*=share]").remove();
+		doc.select("[class*=breadcrumb], [id*=breadcrumb]").remove();
+		doc.select("[href*=facebook], [href*=twitter], [href*=youtube], [href*=pintrest]").remove();
+		doc.select("iframe, embed").remove();
 		
 		//Elements adsInID=doc.select("[id^=ad]").remove();
 		for(String t:OmitElements){
 			try{
-			doc.select(t).remove();}
+				doc.select(t).remove();}
 			catch(org.jsoup.select.Selector.SelectorParseException e){
 				
 			}
@@ -68,6 +80,7 @@ public class ContentExtractor {
 				
 			}
 		}
+		page.setHtml(doc);
 		String text="";
 		try{
 			text=getPlainText(doc);

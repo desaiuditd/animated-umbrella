@@ -44,6 +44,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
@@ -318,24 +319,28 @@ public class WebCrawler implements CrawlerControllerCommunicator {
     public void indexThisPage(Page p){
         if(p.getHTML()!=null){
             try {
-                p.plainText= extractor.extractFromDocument(p.getHTML());//CommonExtractors.DEFAULT_EXTRACTOR.getText(p.getHTML().html().toString());
-                IndexResponse response = ESclient.prepareIndex("techblogs", "page")
-                        .setSource(jsonBuilder()
-                                .startObject()
-                                .field("url", p.getUrl().toString())
-                                .field("text", p.plainText)
-                                .field("timestamp", new Date())
-                                .field("title",p.getTitle())
-								.field("source",p.getUrl().getHost().toString())
-                                .endObject()
-                        )
+                p.plainText= extractor.extractFromDocument(p);//CommonExtractors.DEFAULT_EXTRACTOR.getText(p.getHTML().html().toString());
+
+				XContentBuilder json = jsonBuilder()
+						.startObject()
+						.field("url", p.getUrl().toString())
+						.field("text", p.plainText)
+						.field("timestamp", new Date())
+						.field("title", p.getTitle())
+						.field("source", p.getUrl().getHost().toString())
+						.field("tags", p.getTags(p.plainText))
+						.field("html", p.getHTML().toString())
+						.field("meta",p.getMeta())
+						.endObject();
+              IndexResponse response = ESclient.prepareIndex("techblogs", "page")
+                        .setSource(json)
                         .get();
-                p._id=response.getId();
+              p._id=response.getId();
                 p._index=response.getIndex();
                 p._type=response.getType();
 
-                System.out.println(p.getUri() + " " +p._id +" "+ p._index +" "+p._type);
-
+               System.out.println(p.getUri() + " " +p._id +" "+ p._index +" "+p._type);
+			///	System.out.println(json.string());
 
             } catch (Exception e) {
                 e.printStackTrace();

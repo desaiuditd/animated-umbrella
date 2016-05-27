@@ -6,6 +6,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,9 +18,12 @@ import org.jsoup.nodes.Element;
 
 import edu.scu.java.webcrawl.CrawlerException;
 import edu.scu.java.webcrawl.controller.Constants;
+import org.jsoup.select.Elements;
 
 public class Page {
 	private URL Url;
+	private Document html;
+
 	public URL getUrl() {
 		return Url;
 	}
@@ -28,7 +36,16 @@ public class Page {
 
 	public String _index, _type, _id;
 	public String plainText;
-	
+	public String meta;
+
+	public String getMeta() {
+		return meta;
+	}
+
+	public void setMeta(String meta) {
+		this.meta = meta;
+	}
+
 	public Page(URL pageUri){
 		this.Url=pageUri;
 		this.LinksFromThePage= new ArrayList<String>();
@@ -45,6 +62,7 @@ public class Page {
 				 }
 				 this.Title= htmlDocument.title();
 				 this.Title = (Title == null || Title.length()<=2)? this.Url.toString(): Title;
+				this.meta= getMetaTag(htmlDocument);
 			}
 			else{
 				throw new CrawlerException("Exception with the Jsoup  ", CrawlerException.State.Network);
@@ -59,6 +77,30 @@ public class Page {
 		}
 		
 		return this;
+	}
+
+	private String getMetaTag(Document document) {
+		Elements elements = document.select("meta[name=" + "description" + "]");
+		for (Element element : elements) {
+			final String s = element.attr("content");
+			if (s != null) return s;
+		}
+		elements = document.select("meta[property=" + "description" + "]");
+		for (Element element : elements) {
+			final String s = element.attr("content");
+			if (s != null) return s;
+		}
+		elements = document.select("meta[name=" + "og:description" + "]");
+		for (Element element : elements) {
+			final String s = element.attr("content");
+			if (s != null) return s;
+		}
+		elements = document.select("meta[property=" + "og:description" + "]");
+		for (Element element : elements) {
+			final String s = element.attr("content");
+			if (s != null) return s;
+		}
+		return null;
 	}
 
 	private Document getErrorHTML() {
@@ -118,6 +160,21 @@ public class Page {
 		return this.LinksFromThePage.size();
 	}
 
-	
 
+	public Object getTags(String text) {
+		try {
+			HttpResponse response=Unirest.post("http://localhost:5050/extract")
+                    .field("text", text+this.meta)
+                    .asString();
+			JSONArray array= new JSONArray(response.getBody().toString());
+
+			return array;
+		} catch (UnirestException e) {
+			return null;
+		}
+	}
+
+	public void setHtml(Document html) {
+		this.html = html;
+	}
 }
