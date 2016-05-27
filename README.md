@@ -23,3 +23,8 @@ Our Own Custom Elastic Search Instance
 - Endpoint: http://52.40.86.78:9200/
 - Endpoint: http://ec2-52-40-86-78.us-west-2.compute.amazonaws.com:9200/
 - ElasticHQ UI: http://52.40.86.78:9200/_plugin/hq/
+
+TagServer API Heroku App
+========================
+
+- https://web-search-phrasie.herokuapp.com/
