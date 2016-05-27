@@ -16,6 +16,10 @@ Template.search.helpers(
 		totalDocuments: function () {
 			return Session.get('es.totalDocuments') || 0;
 		},
+		totalPages: function () {
+			var limit = 10;
+			return this.totalDocuments() / 10;
+		},
 		showNoResultsFound: function () {
 			var data = this.data();
 

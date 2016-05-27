@@ -1,0 +1,25 @@
+<template name="settings">
+	<div id="content">
+		{{> appNav}}
+
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12 col-lg-12 my-center-block">
+					<h1>Settings</h1>
+					{{> quickForm
+						id="user-settings"
+						schema="Schemas.userSettings"
+						type="method"
+						meteormethod="saveUserSettings"
+						template="bootstrap3"
+						afFieldInput-placeholder="schemaLabel"
+						doc=getUserSettings
+					}}
+				</div>
+			</div>
+		</div>
+
+		{{> footer}}
+	</div>
+
+</template>

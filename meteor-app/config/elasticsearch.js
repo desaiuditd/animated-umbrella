@@ -5,7 +5,7 @@ ES = {
 	baseEndPoint: "http://ec2-52-40-86-78.us-west-2.compute.amazonaws.com:9200",
 	index: "techblogs",
 	type: "page",
-	queryBuilder: function ( q, offset = 0, limit = 50 ) {
+	queryBuilder: function ( q, offset = 0, limit = 10 ) {
 		var query = {};
 
 		query.url = this.baseEndPoint + '/' + this.index + '/' + '_search';

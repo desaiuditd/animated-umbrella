@@ -26,6 +26,14 @@ FlowRouter.route( '/search', {
 	}
 } );
 
+FlowRouter.route( '/settings', {
+	triggersEnter: [ AccountsTemplates.ensureSignedIn, ES.resetSessionVariables ],
+	name: 'settings',
+	action: function(params, queryParams) {
+		BlazeLayout.render('settings');
+	}
+} );
+
 /**
  * Accounts Routes
  */
