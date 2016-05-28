@@ -1,0 +1,7 @@
+This module helps to get all the tags and title for the given url 
+
+// to be used for the Advanced feature.
+
+usage can be seen in the ScrapperTest.js file
+
+add request and summarize to the package.json file before running
