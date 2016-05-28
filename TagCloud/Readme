@@ -1,0 +1,5 @@
+This module helps to get all the tags got the given list of documents in the Elastic search Hits
+
+usage can be seen in the TagTest.js file
+
+add hashmap and natural to the package.json file before running
