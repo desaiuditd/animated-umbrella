@@ -41,21 +41,19 @@
 
 			<div class="row search-result-pagination">
 				<div class="col-lg-12">
-					{{#if searchResults}}
+					{{#if showPagination}}
 						<nav>
 							<ul class="pagination pagination-lg">
 								<li>
-									<a href="#" aria-label="Previous">
+									<a href="{{getPaginatedURL 0}}" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
+								{{#each getPaginatedLinkMeta}}
+									<li class="{{isActivePageLink}}"><a href="{{link}}">{{page}}</a></li>
+								{{/each}}
 								<li>
-									<a href="#" aria-label="Next">
+									<a href="{{getPaginatedURL -1}}" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>

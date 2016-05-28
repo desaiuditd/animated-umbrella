@@ -8,17 +8,13 @@ Template.search.helpers(
 			return data.queryParams.q;
 		},
 		searchResults: function () {
-			return Session.get('es.searchResults') || [];
+			return ES.getSearchResults();
 		},
 		timeTook: function () {
-			return Session.get('es.timeTook') || 0;
+			return ES.getTimeTook();
 		},
 		totalDocuments: function () {
-			return Session.get('es.totalDocuments') || 0;
-		},
-		totalPages: function () {
-			var limit = 10;
-			return this.totalDocuments() / 10;
+			return ES.getTotalDocuments();
 		},
 		showNoResultsFound: function () {
 			var data = this.data();
@@ -31,20 +27,61 @@ Template.search.helpers(
 			if ( data.queryParams.q.length == 0 )
 				return false;
 
-			console.log("requestTriggered: "+Session.get('es.requestTriggered'))
-			if ( ! Session.get('es.requestTriggered') )
+			console.log("requestTriggered: "+ES.getRequestTriggered())
+			if ( ! ES.getRequestTriggered() )
 				return false;
 
-			console.log("requestDone: "+Session.get('es.requestDone'))
-			if ( ! Session.get('es.requestDone') )
+			console.log("requestDone: "+ES.getRequestDone())
+			if ( ! ES.getRequestDone() )
 				return false;
 
-			console.log("total docs: "+Session.get('es.totalDocuments'))
-			if ( Session.get('es.totalDocuments') )
+			console.log("total docs: "+ES.getTotalDocuments())
+			if ( ES.getTotalDocuments() )
 				return false;
 
 			console.log("show no results");
 			return true;
+		},
+		showPagination: function () {
+			var pages = ES.getTotalPages();
+			return ES.getSearchResults() && pages > 1;
+		},
+		getPaginatedURL: function (page) {
+			var url = "/search?";
+			var data = this.data();
+			var params = {
+				q: data.queryParams.q,
+				page: page < 0 ? ES.getTotalPages() : page
+			};
+			return url + $.param(params);
+		},
+		getPaginatedLinkMeta: function () {
+			var pageLinkMeta = [];
+
+			var url = "/search?";
+			var data = this.data();
+
+			for ( i = 0; i < ES.getTotalPages(); i++ ) {
+
+				var params = {
+					q: data.queryParams.q,
+					page: i+1
+				};
+
+				pageLinkMeta[i] = {
+					page: i+1,
+					link: url + $.param(params)
+				};
+			}
+			return pageLinkMeta;
+		},
+		isActivePageLink: function () {
+			var currentRoute = FlowRouter.current();
+
+			if (this.link == currentRoute.path)
+				return "active";
+			else
+				return "";
 		}
 	}
 );

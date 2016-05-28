@@ -28,7 +28,7 @@ ES = {
 			"size":limit,
 			"sort": {
 				"_score": {
-					"order": "asc"
+					"order": "desc"
 				}
 			},
 			"explain":true
@@ -44,10 +44,43 @@ ES = {
 		return response;
 	},
 	resetSessionVariables: function () {
-		Session.set( 'es.searchResults', [] );
-		Session.set( 'es.totalDocuments', 0 );
-		Session.set( 'es.timeTook', 0 );
-		Session.set( 'es.requestTriggered', 0 );
-		Session.set( 'es.requestDone', 0 );
+		ES.setSearchResults([]);
+		ES.setTotalDocuments(0);
+		ES.setTimeTook(0);
+		ES.setRequestTriggered(0);
+		ES.setRequestDone(0);
+	},
+	getSearchResults: function () {
+		return Session.get('es.searchResults') || [];
+	},
+	setSearchResults: function (searchResults) {
+		Session.set('es.searchResults', searchResults);
+	},
+	getTotalDocuments: function () {
+		return Session.get('es.totalDocuments') || 0;
+	},
+	setTotalDocuments: function (totalDocuments) {
+		Session.set('es.totalDocuments',totalDocuments);
+	},
+	getTimeTook: function () {
+		return Session.get('es.timeTook') || 0;
+	},
+	setTimeTook: function (timeTook) {
+		Session.set('es.timeTook', timeTook);
+	},
+	getRequestTriggered: function () {
+		return Session.get('es.requestTriggered') || 0;
+	},
+	setRequestTriggered: function (requestTriggered) {
+		Session.set('es.requestTriggered',requestTriggered);
+	},
+	getRequestDone: function () {
+		return Session.get('es.requestDone') || 0;
+	},
+	setRequestDone: function (requestDone) {
+		Session.set('es.requestDone',requestDone);
+	},
+	getTotalPages: function () {
+		return Math.ceil(ES.getTotalDocuments() / auSettings.getResultsPerPage());
 	}
 };

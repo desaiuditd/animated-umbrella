@@ -4,10 +4,7 @@
 Meteor.methods(
 	{
 		saveUserSettings: function (settings) {
-			Meteor.users.update(
-				{ _id: Meteor.user()._id },
-				{ $set: { auSettings: { resultsPerPage: settings.resultsPerPage } } }
-			);
+			auSettings.setResultsPerPage(settings.resultsPerPage);
 		}
 	}
 );

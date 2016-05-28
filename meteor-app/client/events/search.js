@@ -6,9 +6,26 @@ Template.search.onRendered(function () {
 
 	if ( data.queryParams.q ) {
 
-		Session.set( 'es.requestTriggered', 1 );
+		ES.setRequestTriggered(1);
 
-		Meteor.call( 'fetchSearchResults', data.queryParams.q, function ( error, response ) {
+		var offset = 0;
+		var limit = 10;
+
+		var user = Meteor.user();
+
+		if ( user.auSettings && user.auSettings.resultsPerPage ) {
+			limit = user.auSettings.resultsPerPage;
+		}
+
+		if ( data.queryParams.page > 0 ) {
+			offset = limit * ( data.queryParams.page - 1 );
+		}
+
+		console.log(data.queryParams.page)
+		console.log(offset)
+		console.log(limit)
+
+		Meteor.call( 'fetchSearchResults', data.queryParams.q, offset, limit ,function ( error, response ) {
 			if ( error ) {
 				console.log( "error occured on receiving data on server. ", err );
 			} else {
@@ -17,10 +34,12 @@ Template.search.onRendered(function () {
 				var totalDocuments = hits.total;
 				var documents = hits.hits;
 
-				Session.set( 'es.requestDone', 1 );
-				Session.set( 'es.searchResults', documents );
-				Session.set( 'es.totalDocuments', totalDocuments );
-				Session.set( 'es.timeTook', timeTook );
+				console.log(documents)
+
+				ES.setRequestDone(1);
+				ES.setSearchResults(documents);
+				ES.setTotalDocuments(totalDocuments);
+				ES.setTimeTook(timeTook);
 			}
 		} );
 

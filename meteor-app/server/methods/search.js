@@ -3,9 +3,9 @@
  */
 Meteor.methods(
 	{
-		fetchSearchResults: function ( q ) {
+		fetchSearchResults: function ( q, offset = 0, limit = 10 ) {
 			if ( q ) {
-				var query = ES.queryBuilder(q);
+				var query = ES.queryBuilder(q, offset, limit);
 
 				var response = ES.queryExecutioner(query);
 
