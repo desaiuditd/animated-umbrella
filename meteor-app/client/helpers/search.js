@@ -81,7 +81,7 @@ Template.search.helpers(
 			if (this.link == currentRoute.path)
 				return "active";
 			else
-				return "";
+				return "";Meteor.subscribe("userSettings");
 		}
 	}
 );
