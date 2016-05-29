@@ -7,7 +7,7 @@ auSettings = {
 
 		var user = Meteor.user();
 
-		if ( user.auSettings && user.auSettings.resultsPerPage ) {
+		if ( user && user.auSettings && user.auSettings.resultsPerPage ) {
 			limit = user.auSettings.resultsPerPage;
 		}
 
@@ -18,5 +18,11 @@ auSettings = {
 			{ _id: Meteor.user()._id },
 			{ $set: { auSettings: { resultsPerPage: resultsPerPage } } }
 		);
+	},
+	setAlertSuccess: function ( message ) {
+		Session.set( 'auSettingsSuccess', message );
+	},
+	setAlertError: function ( message ) {
+		Session.set( 'auSettingsError', message );
 	}
 };

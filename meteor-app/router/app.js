@@ -7,10 +7,17 @@ FlowRouter.route( '/', {
 	name: 'home',
 	action: function(params, queryParams) {
 
-		var data = {};
-		data.queryParams = queryParams;
+		Tracker.autorun( function () {
+			var data = {};
+			data.queryParams = queryParams;
 
-		BlazeLayout.render('search', { data: data } );
+			if ( queryParams.q && ! queryParams.qid ) {
+				data.queryParams.qid = auHistory.addQuery(queryParams.q);
+			}
+
+			BlazeLayout.render('search', { data: data } );
+		} );
+
 	}
 } );
 
@@ -19,10 +26,24 @@ FlowRouter.route( '/search', {
 	name: 'search',
 	action: function(params, queryParams) {
 
-		var data = {};
-		data.queryParams = queryParams;
+		Tracker.autorun( function () {
+			var data = {};
+			data.queryParams = queryParams;
 
-		BlazeLayout.render('search', { data: data } );
+			if ( queryParams.q && ! queryParams.qid ) {
+				data.queryParams.qid = auHistory.addQuery(queryParams.q);
+			}
+
+			BlazeLayout.render('search', { data: data } );
+		} );
+	}
+} );
+
+FlowRouter.route( '/history', {
+	triggersEnter: [ AccountsTemplates.ensureSignedIn, ES.resetSessionVariables ],
+	name: 'history',
+	action: function (params, queryParams) {
+		BlazeLayout.render('history');
 	}
 } );
 

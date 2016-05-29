@@ -5,8 +5,6 @@ Template.search.onRendered(function () {
 
 	this.autorun( function () {
 
-		console.log("search template render");
-
 		var data = this._templateInstance.data.data();
 
 		if ( data.queryParams.q ) {
@@ -18,7 +16,7 @@ Template.search.onRendered(function () {
 
 			var user = Meteor.user();
 
-			if ( user.auSettings && user.auSettings.resultsPerPage ) {
+			if ( user && user.auSettings && user.auSettings.resultsPerPage ) {
 				limit = user.auSettings.resultsPerPage;
 			}
 
@@ -28,7 +26,7 @@ Template.search.onRendered(function () {
 
 			Meteor.call( 'fetchSearchResults', data.queryParams.q, offset, limit ,function ( error, response ) {
 				if ( error ) {
-					console.log( "error occured on receiving data on server. ", err );
+					console.log( "error occured on receiving data on server. ", error );
 				} else {
 					var timeTook = response.took;
 					var hits = response.hits;

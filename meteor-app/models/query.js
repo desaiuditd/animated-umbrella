@@ -1,21 +1,15 @@
 /**
- * Created by udit on 19/05/16.
+ * Created by udit on 28/05/16.
  */
 
-activity = new Meteor.Collection( 'activity' );
+query = new Meteor.Collection( 'query' );
 
-Schemas.activity = new SimpleSchema(
+Schemas.query = new SimpleSchema(
 	{
 		user_id: {
 			type: String,
 		},
-		type: {
-			type: String,
-		},
-		query_id: {
-			type: String,
-		},
-		document_id: {
+		query: {
 			type: String,
 		},
 		timestamp: {
@@ -37,4 +31,15 @@ Schemas.activity = new SimpleSchema(
 	}
 );
 
-activity.attachSchema( Schemas.activity );
+query.attachSchema( Schemas.query );
+
+query.allow(
+	{
+		insert: function (userID, doc) {
+			return ( userID ) ? true : false;
+		},
+		update: function (userID, doc) {
+			return ( userID ) ? true : false;
+		}
+	}
+);

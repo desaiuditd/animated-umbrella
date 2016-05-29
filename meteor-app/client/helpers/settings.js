@@ -10,11 +10,26 @@ Template.settings.helpers(
 
 			var user = Meteor.user();
 
-			if ( user.auSettings && user.auSettings.resultsPerPage ) {
+			if ( user && user.auSettings && user.auSettings.resultsPerPage ) {
 				settings.resultsPerPage = user.auSettings.resultsPerPage;
 			}
 
 			return settings;
+		}
+	}
+);
+
+Template.settingsAlert.helpers(
+	{
+		getSuccessMessage: function () {
+			return Session.get( 'auSettingsSuccess' );
+		},
+		getErrorMessage: function () {
+			return Session.get( 'auSettingsError' );
+		},
+		resetMessages: function () {
+			Session.set( 'auSettingsSuccess', '' );
+			Session.set( 'auSettingsError', '' );
 		}
 	}
 );

@@ -7,6 +7,10 @@ Template.search.helpers(
 			var data = this.data();
 			return data.queryParams.q;
 		},
+		existingQueryID: function () {
+			var data = this.data();
+			return ( data.queryParams.qid ) ? '<input type="hidden" name="qid" value="' + data.queryParams.qid + '" />' : "";
+		},
 		searchResults: function () {
 			return ES.getSearchResults();
 		},
@@ -19,27 +23,21 @@ Template.search.helpers(
 		showNoResultsFound: function () {
 			var data = this.data();
 
-			console.log(data.queryParams.q);
-
 			if ( data.queryParams.q == undefined )
 				return false;
 
 			if ( data.queryParams.q.length == 0 )
 				return false;
 
-			console.log("requestTriggered: "+ES.getRequestTriggered())
 			if ( ! ES.getRequestTriggered() )
 				return false;
 
-			console.log("requestDone: "+ES.getRequestDone())
 			if ( ! ES.getRequestDone() )
 				return false;
 
-			console.log("total docs: "+ES.getTotalDocuments())
 			if ( ES.getTotalDocuments() )
 				return false;
 
-			console.log("show no results");
 			return true;
 		},
 		showPagination: function () {
@@ -49,10 +47,16 @@ Template.search.helpers(
 		getPaginatedURL: function (page) {
 			var url = "/search?";
 			var data = this.data();
+
 			var params = {
 				q: data.queryParams.q,
 				page: page < 0 ? ES.getTotalPages() : page
 			};
+
+			if ( data.queryParams.qid ) {
+				params.qid = data.queryParams.qid;
+			}
+
 			return url + $.param(params);
 		},
 		getPaginatedLinkMeta: function () {
@@ -68,6 +72,10 @@ Template.search.helpers(
 					page: i+1
 				};
 
+				if ( data.queryParams.qid ) {
+					params.qid = data.queryParams.qid;
+				}
+
 				pageLinkMeta[i] = {
 					page: i+1,
 					link: url + $.param(params)
@@ -81,7 +89,7 @@ Template.search.helpers(
 			if (this.link == currentRoute.path)
 				return "active";
 			else
-				return "";Meteor.subscribe("userSettings");
+				return "";
 		}
 	}
 );
