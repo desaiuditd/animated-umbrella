@@ -39,6 +39,24 @@ FlowRouter.route( '/search', {
 	}
 } );
 
+FlowRouter.route( '/redirect', {
+	triggersEnter: [ AccountsTemplates.ensureSignedIn ],
+	name: 'redirect',
+	action: function (params, queryParams) {
+		Tracker.autorun( function () {
+			var userID = Meteor.userId();
+			if ( userID ) {
+				var meta = {
+					title: queryParams.title,
+					url: queryParams.url
+				};
+				auHistory.addActivity(userID, "click", queryParams.qid, queryParams.docid, meta);
+				window.location = queryParams.url;
+			}
+		} );
+	}
+} );
+
 FlowRouter.route( '/history', {
 	triggersEnter: [ AccountsTemplates.ensureSignedIn, ES.resetSessionVariables ],
 	name: 'history',

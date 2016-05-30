@@ -75,8 +75,13 @@
 <template name="searchResult">
 	<div class="row search-result" id="{{this._id}}">
 		<div class="col-lg-12">
-			<a target="_blank" href="{{this._source.url}}"><strong>{{this._source.title}}</strong></a>
-			<p>{{textContent this._source.text}}</p>
+			<a target="_blank" href="{{searchResultLink}}"><strong>{{this._source.title}}</strong></a>
+			<p class="text-success text-small">{{this._source.url}}</p>
+			{{#if this._source.meta}}
+				<p>{{this._source.meta}}</p>
+			{{else}}
+				<p>{{textContent this._source.text}}</p>
+			{{/if}}
 		</div>
 	</div>
 </template>

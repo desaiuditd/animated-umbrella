@@ -31,10 +31,22 @@ Schemas.activity = new SimpleSchema(
 			}
 		},
 		meta: {
-			type: [ Object ],
-			optional: true
+			type: Object,
+			optional: true,
+			blackbox: true
 		}
 	}
 );
 
 activity.attachSchema( Schemas.activity );
+
+activity.allow(
+	{
+		insert: function (userID, doc) {
+			return ( userID ) ? true : false;
+		},
+		update: function (userID, doc) {
+			return ( userID ) ? true : false;
+		}
+	}
+);

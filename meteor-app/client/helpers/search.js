@@ -105,6 +105,19 @@ Template.searchResult.helpers(
 			} else {
 				return content;
 			}
+		},
+		searchResultLink: function () {
+			var url = "/redirect?";
+			var data = Template.parentData().data();
+
+			var params = {
+				qid: data.queryParams.qid,
+				docid: this._id,
+				url: this._source.url,
+				title: this._source.title
+			};
+
+			return url + $.param(params);
 		}
 	}
 );

@@ -15,5 +15,16 @@ auHistory = {
 		}
 
 		return "";
+	},
+	addActivity: function (userID, type, qid, docid, meta) {
+		return activity.insert(
+			{
+				user_id: userID,
+				type: type,
+				query_id: qid,
+				document_id: docid,
+				meta: meta
+			}
+		);
 	}
 };
