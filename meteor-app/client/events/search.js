@@ -44,3 +44,27 @@ Template.search.onRendered(function () {
 	} );
 
 } );
+
+Template.search.events(
+	{
+		'keyup #js-q': function ( event ) {
+			var preValue = $(event.target).data('value');
+			var curValue = $(event.target).val();
+
+			if ( preValue == curValue ) {
+				$('#js-q-submit').attr('disabled', true);
+				$('#js-q-submit').prop('disabled', true);
+				return;
+			} else {
+				$('#js-q-submit').attr('disabled', false);
+				$('#js-q-submit').prop('disabled', false);
+			}
+
+			if ( ! curValue ) {
+				$('#js-q-submit').attr('disabled', true);
+				$('#js-q-submit').prop('disabled', true);
+			}
+
+		}
+	}
+);

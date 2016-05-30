@@ -50,7 +50,8 @@ FlowRouter.route( '/redirect', {
 					title: queryParams.title,
 					url: queryParams.url
 				};
-				auHistory.addActivity(userID, "click", queryParams.qid, queryParams.docid, meta);
+				var activity_id = auHistory.addActivity(userID, "click", queryParams.qid, queryParams.docid, meta);
+				console.log(activity_id);
 				window.location = queryParams.url;
 			}
 		} );
