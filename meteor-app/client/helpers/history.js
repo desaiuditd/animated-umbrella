@@ -8,7 +8,7 @@ Template.history.helpers(
 			var userID = Meteor.userId();
 			var queryLog = [];
 			if ( userID ) {
-				queryLog = query.find({user_id: userID}).fetch();
+				queryLog = query.find({user_id: userID},{sort:{timestamp:-1}}).fetch();
 			}
 			return queryLog;
 		}
@@ -34,7 +34,7 @@ Template.singleHistory.helpers(
 			var activities = [];
 			var userID = Meteor.userId();
 			if ( userID ) {
-				activities = activity.find({user_id:userID, query_id: this._id}).fetch();
+				activities = activity.find({user_id:userID, query_id: this._id},{sort:{timestamp:-1}}).fetch();
 			}
 			return activities;
 		}
