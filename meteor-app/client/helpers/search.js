@@ -65,28 +65,49 @@ Template.search.helpers(
 			var url = "/search?";
 			var data = this.data();
 
-			for ( i = 0; i < ES.getTotalPages(); i++ ) {
+			var start = 1;
+			var end = ES.getTotalPages() > 10 ? 10 : ES.getTotalPages();
+
+			var page = 1;
+
+			if ( data.queryParams.page ) {
+				page = parseInt(data.queryParams.page);
+			}
+
+			start = ( ( page - 5 ) > start ) ? ( page - 5 ) : start;
+
+			end = ( ( page + 4 ) > end ) ? ( page + 4 ) : end;
+
+			for ( i = start; i <= end; i++ ) {
 
 				var params = {
 					q: data.queryParams.q,
-					page: i+1
+					page: i
 				};
 
 				if ( data.queryParams.qid ) {
 					params.qid = data.queryParams.qid;
 				}
 
-				pageLinkMeta[i] = {
-					page: i+1,
+				pageLinkMeta.push({
+					page: i,
 					link: url + $.param(params)
-				};
+				});
 			}
 			return pageLinkMeta;
 		},
 		isActivePageLink: function () {
-			var currentRoute = FlowRouter.current();
+			var data = Template.parentData().data();
 
-			if (this.link == currentRoute.path)
+			var page = 1;
+			if ( data.queryParams.page ) {
+				page = parseInt(data.queryParams.page);
+				if ( page == 0 ) {
+					page = 1;
+				}
+			}
+
+			if (this.page == page)
 				return "active";
 			else
 				return "";
