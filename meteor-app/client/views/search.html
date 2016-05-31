@@ -7,12 +7,27 @@
 
 			<div class="row search-form">
 				<div class="col-lg-12">
-					<form method="get" action="/search">
-						<div class="input-group">
-							<input type="text" name="q" id="js-q" class="form-control input-lg" placeholder="Search for..." value="{{existingQuery}}" data-value="{{existingQuery}}" />
+					<form id="search-form" data-toggle="validator" method="get" action="/search">
+						<div class="input-group form-group has-feedback">
+							<input required type="text" name="q" id="js-q" class="form-control input-lg" placeholder="Search for keywords or URLs ..." value="{{existingQuery}}" data-value="{{existingQuery}}" />
 							<span class="input-group-btn">
 				                <button disabled="true" class="btn btn-primary btn-lg" id="js-q-submit" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 					        </span>
+						</div>
+						<a href="#advanced-search" class="pull-right" data-toggle="collapse">Advanced Search</a>
+						<div id="advanced-search" class="collapse">
+							{{#if getIndices}}
+							<div class="input-group">
+								{{#each getIndices}}
+									<div class="checkbox">
+										<label>
+											{{{renderCheckbox this}}}
+										</label>
+									</div>
+								{{/each}}
+								<div class="help-block with-errors"></div>
+							</div>
+							{{/if}}
 						</div>
 					</form>
 				</div>

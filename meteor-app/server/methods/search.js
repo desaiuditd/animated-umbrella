@@ -3,13 +3,16 @@
  */
 Meteor.methods(
 	{
-		fetchSearchResults: function ( q, offset = 0, limit = 10 ) {
+		fetchSearchResults: function ( q, indices, offset = 0, limit = 10 ) {
 			if ( q ) {
-				var query = ES.queryBuilder(q, offset, limit);
+				var query = ES.queryBuilder(q, indices, offset, limit);
 
 				var response = ES.queryExecutioner(query);
 
 				if(response.statusCode==200) {
+
+					ES.processTags(response.data);
+
 					return response.data;
 				} else {
 					throw new Meteor.Error(result.statusCode, result.data.error);

@@ -14,6 +14,10 @@ Template.search.onRendered(function () {
 			var offset = 0;
 			var limit = 10;
 
+			var indices = $.map(ES.indices, function ( item ) {
+				return item.value;
+			});
+
 			var user = Meteor.user();
 
 			if ( user && user.auSettings && user.auSettings.resultsPerPage ) {
@@ -24,21 +28,47 @@ Template.search.onRendered(function () {
 				offset = limit * ( data.queryParams.page - 1 );
 			}
 
-			Meteor.call( 'fetchSearchResults', data.queryParams.q, offset, limit ,function ( error, response ) {
-				if ( error ) {
-					console.log( "error occured on receiving data on server. ", error );
-				} else {
-					var timeTook = response.took;
-					var hits = response.hits;
-					var totalDocuments = hits.total;
-					var documents = hits.hits;
+			if ( data.queryParams.indices ) {
+				indices = data.queryParams.indices;
+			}
 
-					ES.setRequestDone(1);
-					ES.setSearchResults(documents);
-					ES.setTotalDocuments(totalDocuments);
-					ES.setTimeTook(timeTook);
-				}
-			} );
+			if ( urlSearch.isURL(data.queryParams.q) ) {
+
+				Meteor.call( 'processURL', data.queryParams.q, indices, offset, limit, function ( error, response ) {
+					if ( error ) {
+						console.log( "error occured on receiving data on server. ", error );
+					} else {
+						var timeTook = response.took;
+						var hits = response.hits;
+						var totalDocuments = hits.total;
+						var documents = hits.hits;
+
+						ES.setRequestDone(1);
+						ES.setSearchResults(documents);
+						ES.setTotalDocuments(totalDocuments);
+						ES.setTimeTook(timeTook);
+					}
+				} );
+
+			} else {
+
+				Meteor.call( 'fetchSearchResults', data.queryParams.q, indices, offset, limit ,function ( error, response ) {
+					if ( error ) {
+						console.log( "error occured on receiving data on server. ", error );
+					} else {
+						var timeTook = response.took;
+						var hits = response.hits;
+						var totalDocuments = hits.total;
+						var documents = hits.hits;
+
+						ES.setRequestDone(1);
+						ES.setSearchResults(documents);
+						ES.setTotalDocuments(totalDocuments);
+						ES.setTimeTook(timeTook);
+					}
+				} );
+
+			}
 
 		}
 	} );
@@ -65,6 +95,22 @@ Template.search.events(
 				$('#js-q-submit').prop('disabled', true);
 			}
 
+		},
+		'click #advanced-search input[name=indices]': function ( event ) {
+			var flag = false;
+			for ( i = 0; i < $('#advanced-search input[name=indices]').length; i++ ) {
+				var item = $('#advanced-search input[name=indices]')[i];
+				if ( $(item).is(':checked') ) {
+					flag = true;
+				}
+			}
+			if ( ! flag ) {
+				$('#js-q-submit').attr('disabled', true);
+				$('#js-q-submit').prop('disabled', true);
+			} else {
+				$('#js-q-submit').attr('disabled', false);
+				$('#js-q-submit').prop('disabled', false);
+			}
 		}
 	}
 );

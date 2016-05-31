@@ -11,8 +11,21 @@ FlowRouter.route( '/', {
 			var data = {};
 			data.queryParams = queryParams;
 
+			var indices = $.map(ES.indices, function ( item ) {
+				return item.value;
+			});
+
+			if ( data.queryParams.indices ) {
+
+				if ( typeof data.queryParams.indices == 'string' ) {
+					data.queryParams.indices = [ data.queryParams.indices ];
+				}
+
+				indices = data.queryParams.indices;
+			}
+
 			if ( queryParams.q && ! queryParams.qid ) {
-				data.queryParams.qid = auHistory.addQuery(queryParams.q);
+				data.queryParams.qid = auHistory.addQuery(queryParams.q, indices);
 			}
 
 			BlazeLayout.render('search', { data: data } );
@@ -30,8 +43,21 @@ FlowRouter.route( '/search', {
 			var data = {};
 			data.queryParams = queryParams;
 
+			var indices = $.map(ES.indices, function ( item ) {
+				return item.value;
+			});
+
+			if ( data.queryParams.indices ) {
+
+				if ( typeof data.queryParams.indices == 'string' ) {
+					data.queryParams.indices = [ data.queryParams.indices ];
+				}
+
+				indices = data.queryParams.indices;
+			}
+
 			if ( queryParams.q && ! queryParams.qid ) {
-				data.queryParams.qid = auHistory.addQuery(queryParams.q);
+				data.queryParams.qid = auHistory.addQuery(queryParams.q, indices);
 			}
 
 			BlazeLayout.render('search', { data: data } );

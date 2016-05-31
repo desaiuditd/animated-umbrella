@@ -37,6 +37,27 @@ Template.singleHistory.helpers(
 				activities = activity.find({user_id:userID, query_id: this._id},{sort:{timestamp:-1}}).fetch();
 			}
 			return activities;
+		},
+		getIndices: function () {
+			var indices = [];
+			var defaultIndices = [];
+
+			for(item in ES.indices) {
+				defaultIndices[ES.indices[item].value] = ES.indices[item];
+			}
+
+			if ( this.meta && this.meta.indices ) {
+				indices = $.map(this.meta.indices, function ( item ) {
+
+					if ( defaultIndices[item] ) {
+						return defaultIndices[item];
+					}
+
+					return;
+				});
+			}
+
+			return indices;
 		}
 	}
 );

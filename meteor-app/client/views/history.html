@@ -27,6 +27,13 @@
 		Searched for <a href="{{getQueryLink}}">{{this.query}}</a>
 		{{#if getActivities}}<i class="fa fa-angle-double-right" aria-hidden="true"></i>{{/if}}
 		<span class="text-muted pull-right">{{this.timestamp}}</span>
+		{{#if getIndices}}
+			<p><strong>Source:</strong>
+				{{#each getIndices}}
+					<a target="_blank" href="{{url}}">{{label}}</a>
+				{{/each}}
+			</p>
+		{{/if}}
 	</a>
 	{{#if getActivities}}
 		<div class="collapse" id="{{this._id}}">

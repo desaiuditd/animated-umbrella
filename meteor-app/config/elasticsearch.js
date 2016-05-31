@@ -3,12 +3,16 @@
  */
 ES = {
 	baseEndPoint: "http://ec2-52-40-86-78.us-west-2.compute.amazonaws.com:9200",
-	index: "techblogs",
+	indices: [
+		{ value: "techblogs", label: "The Verge", url: 'http://www.theverge.com/' },
+		{ value: "cnet", label: "CNET", url: 'http://www.cnet.com/' },
+		{ value: "technewsworld", label: "TechNewsWorld", url: 'http://www.technewsworld.com/' }
+	],
 	type: "page",
-	queryBuilder: function ( q, offset = 0, limit = 10 ) {
+	queryBuilder: function ( q, indices, offset = 0, limit = 10 ) {
 		var query = {};
 
-		query.url = this.baseEndPoint + '/' + this.index + '/' + '_search';
+		query.url = this.baseEndPoint + '/' + indices.join(',') + '/' + '_search';
 
 		query.headers = {
 			'Content-Type': 'application/json'
@@ -42,6 +46,25 @@ ES = {
 			data: query.formData
 		} );
 		return response;
+	},
+	processTags: function (searchResponse) {
+		var hits = searchResponse.hits;
+		var documents = hits.hits;
+
+		for(i in documents) {
+			if ( documents[i]._source.tags ) {
+				for ( j in documents[i]._source.tags ) {
+					var existingTag = tag.findOne({tag: documents[i]._source.tags[j].toLowerCase()});
+					if ( ! existingTag ) {
+						tag.insert(
+							{
+								tag: documents[i]._source.tags[j].toLowerCase()
+							}
+						);
+					}
+				}
+			}
+		}
 	},
 	resetSessionVariables: function () {
 		ES.setSearchResults([]);

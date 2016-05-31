@@ -25,8 +25,9 @@ Schemas.query = new SimpleSchema(
 			}
 		},
 		meta: {
-			type: [ Object ],
-			optional: true
+			type: Object,
+			optional: true,
+			blackbox: true
 		}
 	}
 );

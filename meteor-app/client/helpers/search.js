@@ -111,6 +111,22 @@ Template.search.helpers(
 				return "active";
 			else
 				return "";
+		},
+		getIndices: function () {
+			return ES.indices;
+		},
+		renderCheckbox: function (index) {
+			var data = Template.parentData().data();
+
+			var indices = $.map(ES.indices, function ( item ) {
+				return item.value;
+			});
+
+			if ( data.queryParams.indices ) {
+				indices = data.queryParams.indices;
+			}
+
+			return '<input name="indices" type="checkbox" autocomplete="off" value="' + index.value + '" ' + ( $.inArray(index.value, indices) != -1 ? 'checked' : '' ) + '> ' + index.label + ' - <a target="_blank" href="' + index.url + '">' + index.url + '</a>';
 		}
 	}
 );
