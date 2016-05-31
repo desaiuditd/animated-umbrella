@@ -75,8 +75,7 @@ Template.search.helpers(
 			}
 
 			start = ( ( page - 5 ) > start ) ? ( page - 5 ) : start;
-
-			end = ( ( page + 4 ) > end ) ? ( page + 4 ) : end;
+			end = ( ( start + 9 ) > ES.getTotalPages() ) ? ES.getTotalPages() : ( start + 9 );
 
 			for ( i = start; i <= end; i++ ) {
 
