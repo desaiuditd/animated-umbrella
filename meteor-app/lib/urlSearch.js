@@ -12,8 +12,13 @@ urlSearch = {
 	getTagsForUrl: function (url) {
 		var response = HTTP.get(url);
 
-		var summary = summarize(response.content);
+		if(response.statusCode==200) {
 
-		return {title:summary.title, tags:summary.topics};
+			var summary = summarize( response.content );
+
+			return {title: summary.title, tags: summary.topics};
+		} else {
+			throw new Meteor.Error(result.statusCode, result.data.error);
+		}
 	}
 };

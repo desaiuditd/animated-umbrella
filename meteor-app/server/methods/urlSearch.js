@@ -4,11 +4,29 @@
 
 Meteor.methods(
 	{
-		processURL: function (q, offset = 0, limit = 10) {
+		processURL: function (q, indices, offset = 0, limit = 10) {
 			if ( q ) {
 				var summary = urlSearch.getTagsForUrl(q);
-				console.log(summary);
-				// return summary;
+
+				if ( summary && summary.tags ) {
+
+					console.log(summary.tags)
+
+					var query = ES.queryBuilder(summary.tags.join(' '), indices, offset, limit);
+
+					var response = ES.queryExecutioner(query);
+
+					if(response.statusCode==200) {
+
+						ES.processTags(response.data);
+
+						return response.data;
+					} else {
+						throw new Meteor.Error(result.statusCode, result.data.error);
+					}
+				} else {
+					throw new Meteor.Error(500, "No summary found");
+				}
 			}
 		}
 	}
