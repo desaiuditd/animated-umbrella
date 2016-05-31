@@ -10,9 +10,7 @@ Meteor.methods(
 
 				if ( summary && summary.tags ) {
 
-					console.log(summary.tags)
-
-					var query = ES.queryBuilder(summary.tags.join(' '), indices, offset, limit);
+					var query = ES.queryBuilder(summary.tags.slice(0,4).join(' '), indices, offset, limit);
 
 					var response = ES.queryExecutioner(query);
 
