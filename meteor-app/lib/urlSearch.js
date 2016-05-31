@@ -12,8 +12,8 @@ urlSearch = {
 	getTagsForUrl: function (url) {
 		var response = HTTP.get(url);
 
-		var summary=summarize(response.content);
+		var summary = summarize(response.content);
 
 		return {title:summary.title, tags:summary.topics};
 	}
-}
+};
