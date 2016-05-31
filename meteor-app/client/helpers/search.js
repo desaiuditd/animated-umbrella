@@ -44,6 +44,9 @@ Template.search.helpers(
 			var pages = ES.getTotalPages();
 			return ES.getSearchResults() && pages > 1;
 		},
+		showSpinner: function () {
+			return ( ES.getRequestTriggered() && ! ES.getRequestDone() );
+		},
 		getPaginatedURL: function (page) {
 			var url = "/search?";
 			var data = this.data();
