@@ -54,11 +54,12 @@ ES = {
 		for(i in documents) {
 			if ( documents[i]._source.tags ) {
 				for ( j in documents[i]._source.tags ) {
-					var existingTag = tag.findOne({tag: documents[i]._source.tags[j].toLowerCase()});
+					var tagStr = documents[i]._source.tags[j].toLowerCase().trim();
+					var existingTag = tag.findOne({tag: tagStr});
 					if ( ! existingTag ) {
 						tag.insert(
 							{
-								tag: documents[i]._source.tags[j].toLowerCase()
+								tag: tagStr
 							}
 						);
 					}
