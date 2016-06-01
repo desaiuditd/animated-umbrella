@@ -38,7 +38,7 @@
 									</p>
 									<div id="tag-cloud" class="col-lg-6 my-center-block">
 										{{#each getTags}}
-											<a rel="{{count}}" href="/search/tag/{{encodedTag}}">{{tag}}</a>
+											<a rel="{{count}}" href="/search/?q={{encodedTag}}">{{tag}}</a>
 										{{/each}}
 									</div>
 								</div>
