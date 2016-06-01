@@ -40,6 +40,37 @@ ES = {
 
 		return query;
 	},
+	tagQueryBuilder: function ( tag, indices, offset = 0, limit = 10 ) {
+		var query = {};
+
+		query.url = this.baseEndPoint + '/' + indices.join(',') + '/' + '_search';
+
+		query.headers = {
+			'Content-Type': 'application/json'
+		};
+
+		query.formData = {
+			"query": {
+				"bool": {
+					"must": [
+						{ "match": { "tags": tag }},
+						{ "match": { "title": tag }}
+
+					]
+				}
+			},
+			"from":offset,
+			"size":limit,
+			"sort": {
+				"_score": {
+					"order": "desc"
+				}
+			},
+			"explain":true
+		};
+
+		return query;
+	},
 	queryExecutioner: function (query) {
 		var response = HTTP.get(query.url, {
 			headers: query.headers,

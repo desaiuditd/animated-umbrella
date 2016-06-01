@@ -65,6 +65,42 @@ FlowRouter.route( '/search', {
 	}
 } );
 
+FlowRouter.route( '/search/tag/:tagName', {
+	triggersEnter: [ AccountsTemplates.ensureSignedIn, ES.resetSessionVariables ],
+	name: 'search',
+	action: function(params, queryParams) {
+
+		Tracker.autorun( function () {
+			var data = {};
+			data.queryParams = queryParams;
+			data.tagName=params.tagName;
+
+			var indices = $.map(ES.indices, function ( item ) {
+				return item.value;
+			});
+
+			if ( data.queryParams.indices ) {
+
+				if ( typeof data.queryParams.indices == 'string' ) {
+					data.queryParams.indices = [ data.queryParams.indices ];
+				}
+
+				indices = data.queryParams.indices;
+			}
+
+			if ( queryParams.q && ! queryParams.qid ) {
+				data.queryParams.qid = auHistory.addQuery(queryParams.q, indices);
+			}
+
+			if(params.tagName && !queryParams.qid){
+				data.queryParams.qid = auHistory.addQuery(params.tagName, indices);
+			}
+
+			BlazeLayout.render('search', { data: data } );
+		} );
+	}
+} );
+
 FlowRouter.route( '/redirect', {
 	triggersEnter: [ AccountsTemplates.ensureSignedIn ],
 	name: 'redirect',
