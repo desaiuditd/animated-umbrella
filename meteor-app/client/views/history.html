@@ -32,13 +32,18 @@
 		<div class="well">
 
 			<p>
+				<a class="pull-right" target="_blank" href="{{getQueryLink}}">Re-run same query</a>
+			</p>
+
+			{{{showMetaInfo}}}
+
+			<p>
 				{{#if getIndices}}
 					<strong>Source:</strong>
 					{{#each getIndices}}
 						<a target="_blank" href="{{url}}">{{label}}</a>
 					{{/each}}
 				{{/if}}
-				<a class="pull-right" target="_blank" href="{{getQueryLink}}">Re-run same query</a>
 			</p>
 
 			{{#each getActivities}}

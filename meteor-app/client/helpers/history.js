@@ -58,6 +58,31 @@ Template.singleHistory.helpers(
 			}
 
 			return indices;
+		},
+		showMetaInfo: function () {
+
+			var containerStart = '';
+			var containerEnd = '';
+			var title = '';
+			var tags = '';
+
+			if ( this.meta && this.meta.query_type && this.meta.query_type == 'url' ) {
+
+				if ( this.meta.summary && this.meta.summary.title ) {
+					title = '<p><strong>Title: </strong>' + this.meta.summary.title + '</p>';
+				}
+
+				if ( this.meta.summary && this.meta.summary.tags ) {
+					tags = '<p><strong>Tags: </strong>' + this.meta.summary.tags.slice(0,4).join(',') + '</p>';
+				}
+			}
+
+			if ( title || tags ) {
+				// containerStart = '<p>';
+				// containerEnd = '</p>';
+			}
+
+			return containerStart + title + tags + containerEnd;
 		}
 	}
 );
