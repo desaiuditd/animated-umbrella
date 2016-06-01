@@ -98,12 +98,14 @@ ES = {
 			}
 		}
 	},
-	resetSessionVariables: function () {
-		// ES.setSearchResults([]);
-		// ES.setTotalDocuments(0);
-		// ES.setTimeTook(0);
-		// ES.setRequestTriggered(0);
-		// ES.setRequestDone(0);
+	resetSessionVariables: function (context) {
+		if ( ! context.queryParams.q ) {
+			ES.setSearchResults([]);
+			ES.setTotalDocuments(0);
+			ES.setTimeTook(0);
+			ES.setRequestTriggered(0);
+			ES.setRequestDone(0);
+		}
 	},
 	getSearchResults: function () {
 		return Session.get('es.searchResults') || [];
