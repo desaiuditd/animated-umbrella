@@ -42,7 +42,7 @@ Template.search.onRendered(function () {
 					} else {
 						var searchResults = response.searchResults;
 
-						var updateID = auHistory.updateQuery(data.queryParams.qid, { 'meta.sumamry': response.summary } );
+						var updateID = auHistory.updateQuery(data.queryParams.qid, { 'meta.summary': response.summary } );
 
 						var timeTook = searchResults.took;
 						var hits = searchResults.hits;
