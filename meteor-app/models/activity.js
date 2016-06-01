@@ -8,15 +8,23 @@ Schemas.activity = new SimpleSchema(
 	{
 		user_id: {
 			type: String,
+			optional: true,
+			blackbox: true
 		},
 		type: {
 			type: String,
+			optional: true,
+			blackbox: true
 		},
 		query_id: {
 			type: String,
+			optional: true,
+			blackbox: true
 		},
 		document_id: {
 			type: String,
+			optional: true,
+			blackbox: true
 		},
 		timestamp: {
 			type: Date,

@@ -8,9 +8,13 @@ Schemas.query = new SimpleSchema(
 	{
 		user_id: {
 			type: String,
+			optional: true,
+			blackbox: true
 		},
 		query: {
 			type: String,
+			optional: true,
+			blackbox: true
 		},
 		timestamp: {
 			type: Date,

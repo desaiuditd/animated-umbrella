@@ -19,6 +19,21 @@ auHistory = {
 
 		return "";
 	},
+	updateQuery: function ( qid, data ) {
+		var userID = Meteor.userId();
+
+		if ( userID ) {
+			return query.update(
+				{
+					_id: qid
+				}, {
+					$set: data
+				}
+			);
+		}
+
+		return "";
+	},
 	addActivity: function (userID, type, qid, docid, meta) {
 		return activity.insert(
 			{

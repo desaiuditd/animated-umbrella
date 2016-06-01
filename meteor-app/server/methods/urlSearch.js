@@ -18,7 +18,7 @@ Meteor.methods(
 
 						ES.processTags(response.data);
 
-						return response.data;
+						return { searchResults: response.data, summary: summary };
 					} else {
 						throw new Meteor.Error(result.statusCode, result.data.error);
 					}

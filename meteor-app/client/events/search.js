@@ -34,12 +34,18 @@ Template.search.onRendered(function () {
 
 			if ( urlSearch.isURL(data.queryParams.q) ) {
 
+				var updateID = auHistory.updateQuery(data.queryParams.qid, { 'meta.query_type': "url" } );
+
 				Meteor.call( 'processURL', data.queryParams.q, indices, offset, limit, function ( error, response ) {
 					if ( error ) {
 						console.log( "error occured on receiving data on server. ", error );
 					} else {
-						var timeTook = response.took;
-						var hits = response.hits;
+						var searchResults = response.searchResults;
+
+						var updateID = auHistory.updateQuery(data.queryParams.qid, { 'meta.sumamry': response.summary } );
+
+						var timeTook = searchResults.took;
+						var hits = searchResults.hits;
 						var totalDocuments = hits.total;
 						var documents = hits.hits;
 
