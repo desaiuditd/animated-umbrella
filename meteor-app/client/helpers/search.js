@@ -129,6 +129,38 @@ Template.search.helpers(
 			}
 
 			return '<input name="indices" type="checkbox" autocomplete="off" value="' + index.value + '" ' + ( $.inArray(index.value, indices) != -1 ? 'checked' : '' ) + '> ' + index.label + ' - <a target="_blank" href="' + index.url + '">' + index.url + '</a>';
+		},
+		getTags: function () {
+			var rawTags = [];
+			var frequency = [];
+			var docs = ES.getSearchResults();
+			for ( i in docs ) {
+				var docTags = docs[i]._source.tags;
+				for ( j in docTags ) {
+					var tagStr = docTags[j].toLowerCase().trim();
+
+					if ( $.inArray(tagStr, rawTags) == -1 ) {
+						rawTags.push(tagStr);
+						frequency.push(0);
+					}
+
+				}
+			}
+
+			for ( i in rawTags ) {
+				for ( j in docs ) {
+					var count = urlSearch.getStrCount(docs[j]._source.text.toLowerCase(), rawTags[i].toLowerCase());
+					frequency[i] += count;
+				}
+			}
+
+			var tags = [];
+			for ( i in rawTags ) {
+				tags.push( { tag: rawTags[i], encodedTag: encodeURIComponent(rawTags[i]), count: frequency[i] } );
+			}
+
+			return tags;
+
 		}
 	}
 );

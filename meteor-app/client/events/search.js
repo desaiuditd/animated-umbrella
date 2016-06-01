@@ -53,6 +53,8 @@ Template.search.onRendered(function () {
 						ES.setSearchResults(documents);
 						ES.setTotalDocuments(totalDocuments);
 						ES.setTimeTook(timeTook);
+
+						$('#tag-cloud a').tagcloud();
 					}
 				} );
 
@@ -71,11 +73,17 @@ Template.search.onRendered(function () {
 						ES.setSearchResults(documents);
 						ES.setTotalDocuments(totalDocuments);
 						ES.setTimeTook(timeTook);
+
+						$('#tag-cloud a').tagcloud();
 					}
 				} );
 
 			}
 
+			$.fn.tagcloud.defaults = {
+				size: {start: 8, end: 30, unit: 'pt'},
+				color: {start: '#cde', end: '#f52'}
+			};
 		}
 	} );
 
