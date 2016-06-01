@@ -5,7 +5,7 @@ Template.search.onRendered(function () {
 
 	this.autorun( function () {
 
-		var data = this._templateInstance.data.data();
+		var data = Template.currentData().data();
 
 		if ( data.queryParams.q ) {
 
@@ -98,7 +98,24 @@ Template.search.events(
 			if ( preValue == curValue ) {
 				$('#js-q-submit').attr('disabled', true);
 				$('#js-q-submit').prop('disabled', true);
-				return;
+			} else {
+				$('#js-q-submit').attr('disabled', false);
+				$('#js-q-submit').prop('disabled', false);
+			}
+
+			if ( ! curValue ) {
+				$('#js-q-submit').attr('disabled', true);
+				$('#js-q-submit').prop('disabled', true);
+			}
+
+		},
+		'change #js-q': function ( event ) {
+			var preValue = $(event.target).data('value');
+			var curValue = $(event.target).val();
+
+			if ( preValue == curValue ) {
+				$('#js-q-submit').attr('disabled', true);
+				$('#js-q-submit').prop('disabled', true);
 			} else {
 				$('#js-q-submit').attr('disabled', false);
 				$('#js-q-submit').prop('disabled', false);
