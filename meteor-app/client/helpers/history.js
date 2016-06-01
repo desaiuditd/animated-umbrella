@@ -69,7 +69,7 @@ Template.singleHistory.helpers(
 			if ( this.meta && this.meta.query_type && this.meta.query_type == 'url' ) {
 
 				if ( this.meta.summary && this.meta.summary.title ) {
-					title = '<p><strong>Title: </strong>' + this.meta.summary.title + '</p>';
+					title = '<p><strong>Title: </strong> <a target="_blank" href="' + this.query + '">' + this.meta.summary.title + '</a></p>';
 				}
 
 				if ( this.meta.summary && this.meta.summary.tags ) {
