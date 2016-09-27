@@ -2,12 +2,12 @@
   // Server authentication info
   "servers": [
     {
-      "host": "52.40.86.78",
+      "host": "54.218.147.145",
       "username": "ubuntu",
       // "password": "password",
       // or pem file (ssh based authentication)
       // WARNING: Keys protected by a passphrase are not supported
-      "pem": "~/.ssh/animated-umbrella.pem",
+      "pem": "~/.ssh/incognitech.in.pem",
       // Also, for non-standard ssh port use this
       //"sshOptions": { "port" : 49154 },
       // server specific environment variables
@@ -29,15 +29,15 @@
   // Configure environment
   // ROOT_URL must be set to your correct domain (https or http)
   "env": {
-    "PORT": 80,
-    "ROOT_URL": "http://ec2-52-40-86-78.us-west-2.compute.amazonaws.com"
+    "PORT": 3000,
+    "ROOT_URL": "http://animated-umbrella.incognitech.in"
   },
 
   // Meteor Up checks if the app comes online just after the deployment.
   // Before mup checks that, it will wait for the number of seconds configured below.
   "deployCheckWaitTime": 15,
 
-  // show a progress bar while uploading. 
+  // show a progress bar while uploading.
   // Make it false when you deploy using a CI box.
   "enableUploadProgressBar": true
 }
