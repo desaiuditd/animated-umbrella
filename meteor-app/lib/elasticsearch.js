@@ -2,7 +2,7 @@
  * Created by udit on 25/05/16.
  */
 ES = {
-	baseEndPoint: "http://ec2-52-40-86-78.us-west-2.compute.amazonaws.com:9200",
+	baseEndPoint: "http://ec2-54-218-147-145.us-west-2.compute.amazonaws.com",
 	indices: [
 		{ value: "techblogs", label: "The Verge", url: 'http://www.theverge.com/' },
 		{ value: "cnet", label: "CNET", url: 'http://www.cnet.com/' },

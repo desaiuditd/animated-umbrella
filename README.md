@@ -8,21 +8,11 @@ Search Engine for Tech Blogs.
 
 https://docs.google.com/document/d/1gVV8GkYP07XuoKgFxLX78G2H9X41svDg7cFB4Ws6xtc/edit
 
-Elastic Search AWS Endpoint
-===========================
-
-- Endpoint: https://search-animated-umbrella-d2uu36sydurklzpmttf7isu4ra.us-west-2.es.amazonaws.com/
-
-- Console: https://983852029815.signin.aws.amazon.com/console
-	- Username: bala
-    - password : bala@123
-
 Our Own Custom Elastic Search Instance
 ======================================
 
-- Endpoint: http://52.40.86.78:9200/
-- Endpoint: http://ec2-52-40-86-78.us-west-2.compute.amazonaws.com:9200/
-- ElasticHQ UI: http://52.40.86.78:9200/_plugin/hq/
+- Endpoint: http://ec2-54-218-147-145.us-west-2.compute.amazonaws.com/
+- ElasticHQ UI: http://ec2-54-218-147-145.us-west-2.compute.amazonaws.com/_plugin/hq/
 
 TagServer API Heroku App
 ========================
